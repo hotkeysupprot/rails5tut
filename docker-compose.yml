@@ -1,0 +1,28 @@
+version: '2'
+services:
+  web-dd:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db-dd
+    container_name: web-dd
+
+  db-dd:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+          - "127.0.0.1:3306:3306"
+    volumes_from:
+      - datastore-dd
+    container_name: db-dd
+
+  datastore-dd:
+    image: busybox
+    volumes:
+      - ./datastore-dd:/var/lib/mysql
+    container_name: datastore-dd
