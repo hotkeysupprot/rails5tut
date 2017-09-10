@@ -1,5 +1,5 @@
 class NotificationMailer < ApplicationMailer
-  default from: "ho@gmail.com"
+  default from: ENV['MAIL_NAME']
   
   def send_confirm_to_user(member)
     @member = member
